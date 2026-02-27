@@ -43,11 +43,21 @@ Once downloaded, ensure the file is named `rtdetr-x_4.pt` and place it directly 
 
 *(If the model is not found, the application will fallback to a standard `rtdetr-l.pt` model, which will not have the customized defect detection classes).*
 
+## Desktop Shortcut (Windows & Linux)
+
+To easily run the application directly from your Desktop without opening the terminal every time, an automated script is provided.
+
+Run the following command once:
+```bash
+python create_shortcut.py
+```
+This will automatically generate a `PackageBottleInspector.desktop` file on Linux or a `Package Bottle Inspector.lnk` shortcut on Windows.
+
 ## Usage
 
 1. Ensure the cameras are connected to your system.
 2. If necessary, update the `OPC_URL` in `main.py` to match your local OPC UA server.
-3. Run the main application:
+3. Run the main application via the desktop shortcut or manually via terminal:
    ```bash
    python main.py
    ```
