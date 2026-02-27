@@ -22,8 +22,8 @@ PREVIEW_HEIGHT = 298
 
 # --- 3. CONFIGURACIÓN DE CÁMARAS ---
 CAMERAS_CONFIG = [
-  { "id": 2, "desc": "CAM_DER", "foco": 228 },
-  { "id": 4, "desc": "CAM_CEN", "foco": 45 },
+  { "id": 4, "desc": "CAM_DER", "foco": 228 },
+  { "id": 2, "desc": "CAM_CEN", "foco": 45 },
   { "id": 0, "desc": "CAM_IZQ", "foco": 228 }
 ]
 
@@ -40,7 +40,7 @@ CONFIDENCE_MAP_1 = {
   'cuerpo_alreves': 0.9,
   'cuerpo_arrugada': 0.7,
   'cuerpo_ausente': 0.5,
-  'cuerpo_doblada': 0.9,
+  'cuerpo_doblada': 0.95,
   'cuerpo_falla_adherencia': 0.8,
   'cuerpo_invertida': 0.9,
   'cuerpo_ok': 0.3,
@@ -341,7 +341,7 @@ class QualityApp:
 
     # 1. Tomar fotos (pequeño delay para asegurar ráfaga)
     NUM_MUESTRAS = 3
-    INTERVALO_MS = 0.1
+    INTERVALO_MS = 0.05
     rafaga_frames = []
     
     timestamp_captura = datetime.now().strftime("%H:%M:%S")
@@ -388,6 +388,7 @@ class QualityApp:
             umbral_requerido = CONFIDENCE_MAP_1.get(nombre_clase, DEFAULT_CONFIDENCE)
             pasa_filtro = score >= umbral_requerido
             filter_mask.append(pasa_filtro)
+            print(str(nombre_clase)+':'+str(score))
 
           if len(filter_mask) > 0: detections = detections[np.array(filter_mask)]
           else: detections = sv.Detections.empty()
@@ -503,11 +504,11 @@ class QualityApp:
         # Actualizar UI para mostrar que se envió (Columna OPC)
         self.window.after(0, self._marcar_filas_como_enviadas)
 
-        print(">> OPC: Esperando ciclo de máquina (120s)...")
-        for i in range(120):
+        print(">> OPC: Esperando ciclo de máquina (85s)...")
+        for i in range(85):
             self.opc.actualizar_tags(self.stats_counters)
             self.opc.escribir_tag_individual('STATUS', 128)
-            msg_espera = f"ENVIANDO... ({120-i}s)"
+            msg_espera = f"ENVIANDO... ({85-i}s)"
             self.window.after(0, lambda m=msg_espera: actualizar_btn_texto(m))
             
             if not self.opc.connected: 
