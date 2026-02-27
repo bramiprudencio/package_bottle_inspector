@@ -37,7 +37,14 @@ This is a quality inspection application for packaging bottles using computer vi
 This project requires a specifically trained RT-DETR model to function correctly. 
 
 You must download the model file from Hugging Face:
-**[https://huggingface.co/bramiprudencio/package_bottle_inspectorq](https://huggingface.co/bramiprudencio/package_bottle_inspectorq)**
+**[https://huggingface.co/bramiprudencio/package_bottle_inspector](https://huggingface.co/bramiprudencio/package_bottle_inspector)**
+
+To download it automatically via terminal, you can install the `huggingface_hub` package and run the download command:
+
+```bash
+pip install huggingface_hub
+huggingface-cli download bramiprudencio/package_bottle_inspector rtdetr-x_4.pt --local-dir .
+```
 
 Once downloaded, ensure the file is named `rtdetr-x_4.pt` and place it directly into the root directory of this project (`package_bottle_inspector/`).
 
@@ -65,3 +72,10 @@ This will automatically generate a `PackageBottleInspector.desktop` file on Linu
    - **ANALIZAR BOTELLA**: Click to capture images from the cameras and analyze the current bottle.
    - **ENVIAR A ATHENA**: Click to send the accumulated batch results to the OPC UA server and clear the local counters for the next batch.
    - The application automatically attempts to connect to the OPC UA server and the cameras upon startup.
+
+## Dataset and Training
+
+The model used in this project was trained on a custom dataset hosted on Roboflow. You can explore the dataset, view the images, and see the annotations here:
+**[Roboflow Project: PBI](https://app.roboflow.com/pbi-3wavq/pbi/9)**
+
+Additionally, the training process was executed using Google Colab. The associated Jupyter Notebook (`train.ipynb`) contains all the necessary steps and configurations to replicate the model training utilizing Colab's cloud GPUs.
